@@ -1,6 +1,4 @@
 # Create your views here.
-from django.http import HttpResponse
-
 import django.template
 import django.shortcuts
 
@@ -11,4 +9,9 @@ def index(request):
     return django.shortcuts.render_to_response("rango/index.html",context_dict, context)
 
 def about(request):
-    return HttpResponse("""Rango Says: here is the about page<br><p>Return to the <a href="/rango/">front page</a>""")
+    context=django.template.RequestContext(request)
+    context_dict={
+                  'message_about_rango':"""Rango Says: here is the about page""",
+                  'front_page_link':"/rango"}
+    
+    return django.shortcuts.render_to_response("rango/about.html",context_dict, context)
