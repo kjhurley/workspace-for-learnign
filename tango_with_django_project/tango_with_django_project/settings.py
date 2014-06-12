@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rango'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -76,7 +77,18 @@ USE_L10N = True
 USE_TZ = True
 
 
+
+TEMPLATE_PATH=os.path.join(BASE_DIR,"templates")
+
+TEMPLATE_DIRS = (
+                 TEMPLATE_PATH,
+                 )
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-
 STATIC_URL = '/static/'
+
+STATIC_PATH = os.path.join(BASE_DIR,"static")
+STATICFILES_DIRS = (
+                    STATIC_PATH,
+                    )
