@@ -1,0 +1,20 @@
+-- VERSION_3
+-- START DISKCACHE
+/home/khurley/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/newmystuff/com.python.pydev.analysis/v1_indexcache
+.v1_indexcache
+kivy_sandbox.hello_world|0|/home/khurley/workspace/newmystuff/src/kivy_sandbox/hello_world.py
+kivy_sandbox.__init__|0|/home/khurley/workspace/newmystuff/src/kivy_sandbox/__init__.py
+-- END DISKCACHE
+-- START DICTIONARY
+2
+1=kivy_sandbox.hello_world
+2=TestApp
+-- END DICTIONARY
+-- START TREE 1
+1
+tes|1|TestApp!9@
+-- END TREE
+-- START TREE 2
+1
+bui|1|build!2&10@
+-- END TREE
