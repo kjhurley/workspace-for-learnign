@@ -3,17 +3,26 @@ import django.template
 import django.shortcuts
 import rango.models
 
+def name_to_url(name):
+    """ update the url of a model element based on the name """
+    return name.replace(' ','_')
+    
+def url_to_name(url):
+    return url.replace('_',' ')
+
+
 def index(request):
     context=django.template.RequestContext(request)
     
     # order by number of likes in descending order. retrieve at most the top five
     category_list=rango.models.Category.objects.order_by('-likes')[:5]
+    pages = rango.models.Page.objects.order_by('-views')[:5]
     
     # put this list in the context dict used to render the page
-    context_dict={'categories':category_list}
+    context_dict={'categories':category_list,'popular_pages':pages}
     
     for category in category_list:
-        category.url = category.name.replace(' ','_')
+        category.url=name_to_url(category.name)
     
     # render the response
     return django.shortcuts.render_to_response("rango/index.html",context_dict, context)
@@ -29,7 +38,7 @@ def about(request):
 def category(request, category_name_url):
     context = django.template.RequestContext(request)
     
-    category_name = category_name_url.replace('_',' ')
+    category_name = url_to_name(category_name_url)
     context_dict = {'category_name': category_name}
     
     try:

@@ -7,6 +7,8 @@
 
 <body>
   <h1>Rango says ....</h1>
+  
+  <h2> Categories <h2>
   {% if categories %}
   <ul>
     {% for category in categories %}
@@ -16,6 +18,17 @@
   {% else %}
     <strong>No categories found.</strong>
   {% endif %}
+  
+  {% if popular_pages %}
+  <h2>Popular pages<h2>
+  <ul>
+    {% for page in popular_pages %}
+    <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+     
+      
   
   <a href="/rango/about/">About</a><br/>
 
