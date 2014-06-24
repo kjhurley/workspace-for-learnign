@@ -1,0 +1,7 @@
+Following the Django Tutorial
+=============================
+
+I'm following the online Django Tutorial for v1,6
+
+So far I've got to the setup of the polls app.
+
