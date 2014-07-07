@@ -2,7 +2,6 @@ from kivy.app import App
 from kivy.uix.button import Button
 import kivy.uix.label 
 import kivy.uix.gridlayout
-import kivy.uix.relativelayout
 
 """
 top line - channel icon in top left, current time in top right
