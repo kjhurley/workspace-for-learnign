@@ -1,7 +1,7 @@
 """ A model for EPG Guide
 
 Channels is a dict with key per channel
-Each channel has a listing - a list of programmes in time order
+Each channel has a listing - a list of broadcasts (airings of programmes) in time order
 
 {
    BBC 1 : [9am: news, 10am: daytime, ...
@@ -10,6 +10,10 @@ Each channel has a listing - a list of programmes in time order
 
 although the keys are actually 'channel id' and the times are seconds since 1970
 
+Users specify one off timers to record or smart-timers to record multiple connected broadcasts
+
+Recorded broadcasts can be used to find related ones
+
 
 """
 import sys
@@ -17,7 +21,16 @@ import logging
 
 class Recording:
     """ a recorded programme """
-    pass
+    def is_watched(self):
+        pass
+    
+    def recorded_by(self):
+        """ returns the search object that triggered the recording """
+        pass
+    
+    def info(self):
+        """ programme info of the original broadcast """
+        pass
 
 class Programme:
     """ holds information on a single broadcast entity
@@ -25,11 +38,13 @@ class Programme:
       start_time - when the broadcast commenced
       title - what it's called
       details - whatever description was supplied by the guide
+      channel_id - id of channel it was recorded on
       """
-    def __init__(self, start_time, title, details):
+    def __init__(self, start_time, title, details, channel_id):
         self.start=start_time
         self.title=title
         self.details=details  
+        self.cid = channel_id
 
     def record(self):
         """ user requests to record this programme """
@@ -75,11 +90,6 @@ class Channel:
             #logging.debug("couldn't add a programme")
             pass
     
-    @classmethod
-    def htsp_add_channel_event(klass, event_msg):
-        return klass(channel_id=event_msg['channelId'], 
-                     name=event_msg['channelName'], 
-                     number=event_msg['channelNumber'])
     
     def add_programme(self, programme):
         """ insert programme into the listing in chronological order """
@@ -95,23 +105,21 @@ class Guide:
         self._channel_info={}
         self._channels={} # key by channelId
         
-    def add_a_channel(self, new_channel_info):
-        """ add a channel using info from tv head end """
-        new_id=new_channel_info['channelId']
-        self._channel_info[new_id] = Channel.htsp_add_channel_event(
-                     new_channel_info)
+    def add_a_channel(self, new_channel):
+        """ add a channel to the guide """
+        new_id=new_channel.cid
+        self._channel_info[new_id] = new_channel
         self._channels[new_id]=[]
 
     def channel(self, channel_id):
         """ identify the name of the given channel """
         return self._channel_info[channel_id]
     
-    def add_a_programme(self, new_programme_info):
+    def add_a_programme(self, new_programme):
         """ add a single show (on a given channel) """
-        channel_id=new_programme_info['channelId']
+        channel_id=new_programme.cid
         try:
-            prog=Programme.from_htsp(new_programme_info)
-            self._channel_info[channel_id].add_programme(prog)
+            self._channel_info[channel_id].add_programme(new_programme)
             self._channels[channel_id]+=[]
         except RuntimeError:
             #logging.info("missing stuff!")

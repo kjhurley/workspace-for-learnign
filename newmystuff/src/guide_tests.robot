@@ -30,7 +30,7 @@ tvheadend.
 |       |                             |              |                                     |
 
 | *Setting* | Value               |
-| Library   | bdd_tests.py        |
+| Library   | robot_utils/bdd_tests.py        |
 |           |                     |
 
 
