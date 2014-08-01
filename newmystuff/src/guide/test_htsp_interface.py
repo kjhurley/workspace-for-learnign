@@ -12,7 +12,7 @@ class TestConversionFromHTSP(unittest.TestCase):
     def test_create_a_programme(self):
         with mock.patch('guide_model.Programme') as mocked:
             mocked.side_effect = Exception("boom")
-            event_msg={'title':'Title','description':'Details', 'start':100}
+            event_msg={'title':'Title','description':'Details', 'start':100, "channelId":8}
             prog=htsp_interface.HtspInterface.programme(event_msg)
             self.assertEqual(prog.start, 100)
             mocked.assert_called_once()

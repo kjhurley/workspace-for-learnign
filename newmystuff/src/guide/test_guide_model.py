@@ -1,6 +1,7 @@
 import guide_model
 import unittest
 
+# pylint: disable W054
 class GuideTests(unittest.TestCase):
     def test_add_a_channel(self):
         chan=guide_model.Channel( 7, '4Music',  18, )
@@ -27,8 +28,6 @@ class GuideTests(unittest.TestCase):
     def test_get_a_programme_from_listing_by_freeview_channel(self):
         g=guide_model.Guide()
         g.add_a_channel(guide_model.Channel(7,"4Music",18))
-        more_input_from_htsp={'eventId': 116107, 'serieslinkId': 76020, 'contentType': 96, 'description': "It's the pop world cup and today's match is the quarter final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!", 'title': 'Pop World Cup: Rihanna v Lady Gaga', 'nextEventId': 116109, 
-                              'channelId': 7, 'stop': 1404492000, 'episodeId': 116108, 'start': 1404489600, 'method': 'eventAdd'}
         g.add_a_programme(guide_model.Programme(1404489600, "Pop World Cup: Rihanna v Lady Gaga", "It's the pop world cup and today's match is the quarter final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!", 7))
         self.assertEqual(g.channel(channel_id=7).listing[0].title,'Pop World Cup: Rihanna v Lady Gaga')
         self.assertEqual(g.listing(channel_number=18)[0].start,1404489600)
@@ -36,37 +35,34 @@ class GuideTests(unittest.TestCase):
     def test_add_two_programmes_on_same_channel(self):
         g=guide_model.Guide()
         g.add_a_channel(guide_model.Channel(7,"4Music",17))
-        more_input_from_htsp={'eventId': 116107, 'serieslinkId': 76020, 'contentType': 96, 'description': "It's the pop world cup and today's match is the quarter final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!", 'title': 'Pop World Cup: Rihanna v Lady Gaga', 'nextEventId': 116109, 
-                              'channelId': 7, 'stop': 1404492000, 'episodeId': 116108, 'start': 1404489600, 'method': 'eventAdd'}
-        g.add_a_programme(more_input_from_htsp)
+        g.add_a_programme(guide_model.Programme(1404489600, 'Pop World Cup: Rihanna v Lady Gaga',
+                                                "It's the pop world cup and today's match is the quarter final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!",
+                                                7))
         self.assertEqual(g.listing(channel_id=7)[0].title,'Pop World Cup: Rihanna v Lady Gaga')
-        another_show_from_htsp={'eventId': 116108, 'serieslinkId': 76001, 'contentType': 96,
-                                 'description': "It isn't the pop world cup and tomorrrow's match is the final between Madonna and Bob Dylan. This could go either way. It's time to decide which stand you'll be seated in!", 
-                                 'title': 'Pop World Cup: Madonna v Bob Dylan', 'nextEventId': 116109, 
-                                 'channelId': 7, 'stop': 1404498000, 'episodeId': 116200, 'start': 1404489700, 'method': 'eventAdd'}
-        g.add_a_programme(another_show_from_htsp)
+
+        g.add_a_programme(guide_model.Programme(1404489700,'Pop World Cup: Madonna v Bob Dylan',
+                "It isn't the pop world cup and tomorrrow's match is the final between Madonna and Bob Dylan. This could go either way. It's time to decide which stand you'll be seated in!",
+                7))
         self.assertEqual(g.listing(channel_id=7)[1].title,'Pop World Cup: Madonna v Bob Dylan')
         self.assertEqual(g.listing(channel_id=7)[1].start,1404489700)
     
     def test_whats_on_now_one_channel_one_programme(self):
         g=guide_model.Guide()
         g.add_a_channel(guide_model.Channel(7,"4Music",18))
-        more_input_from_htsp={'eventId': 116107, 'serieslinkId': 76020, 'contentType': 96, 'description': "It's the pop world cup and today's match is the quarter final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!", 'title': 'Pop World Cup: Rihanna v Lady Gaga', 'nextEventId': 116109, 
-                              'channelId': 7, 'stop': 1404492000, 'episodeId': 116108, 'start': 1404489600, 'method': 'eventAdd'}
-        g.add_a_programme(more_input_from_htsp)
+        g.add_a_programme(guide_model.Programme(1404489600,'Pop World Cup: Rihanna v Lady Gaga',
+                                                "It's the pop world cup and today's match is the quarter final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!",
+                        7))
         self.assertEqual(g.now(channel_id=7).title,'Pop World Cup: Rihanna v Lady Gaga')
         
     def test_whats_on_next_one_channel_two_programmes(self):
         g=guide_model.Guide()
         g.add_a_channel(guide_model.Channel(7,"4Music", 18))
-        more_input_from_htsp={'eventId': 116107, 'serieslinkId': 76020, 'contentType': 96, 'description': "It's the pop world cup and today's match is the quarter final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!", 'title': 'Pop World Cup: Rihanna v Lady Gaga', 'nextEventId': 116109, 
-                              'channelId': 7, 'stop': 1404492000, 'episodeId': 116108, 'start': 1404489600, 'method': 'eventAdd'}
-        g.add_a_programme(more_input_from_htsp)
-        another_show_from_htsp={'eventId': 116108, 'serieslinkId': 76001, 'contentType': 96,
-                                 'description': "It isn't the pop world cup and tomorrrow's match is the final between Madonna and Bob Dylan. This could go either way. It's time to decide which stand you'll be seated in!", 
-                                 'title': 'Pop World Cup: Madonna v Bob Dylan', 'nextEventId': 116109, 
-                                 'channelId': 7, 'stop': 1404498000, 'episodeId': 116200, 'start': 1404489700, 'method': 'eventAdd'}
-        g.add_a_programme(another_show_from_htsp)
+        g.add_a_programme(guide_model.Programme(1404489600,'Pop World Cup: Rihanna v Lady Gaga',
+                                                "It's the pop world cup and today's match is the quarter final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!",
+                        7))
+        g.add_a_programme(guide_model.Programme(1404489700,'Pop World Cup: Madonna v Bob Dylan',
+                                                "It's the pop world cup and today's match is the quarter final between Madonna and Bob Dylan. This could go either way. It's time to decide which stand you'll be seated in!",
+                        7))
         self.assertEqual(g.next(channel_id=7).title,'Pop World Cup: Madonna v Bob Dylan')
     
     def test_add_two_programmes_on_two_different_channels(self):
@@ -75,18 +71,15 @@ class GuideTests(unittest.TestCase):
         g.add_a_channel(guide_model.Channel(7,"4Music", 18))
         g.add_a_channel(guide_model.Channel(8,"More4", 18))
         self.assertEqual(g.channel(8).name, "More4")
-        more_input_from_htsp={'eventId': 116107, 'serieslinkId': 76020, 'contentType': 96, 
-                              'description': "It's the pop world cup and today's match is the quarter final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!", 'title': 'Pop World Cup: Rihanna v Lady Gaga', 
-                              'nextEventId': 116109, 'channelId': 7, 'stop': 1404492000, 
-                              'episodeId': 116108, 'start': 1404489600, 'method': 'eventAdd'}
-        g.add_a_programme(more_input_from_htsp)
+        g.add_a_programme(guide_model.Programme(1404489600, 'Pop World Cup: Rihanna v Lady Gaga',
+                      "It's the pop world cup and today's match is the quarter final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!", 
+                      7 ))
         # first show is on channel id 7
         self.assertEqual(g.listing(channel_id=7)[0].title,'Pop World Cup: Rihanna v Lady Gaga')
-        another_show_from_htsp={'eventId': 116108, 'serieslinkId': 76001, 'contentType': 96,
-                                 'description': "It isn't the pop world cup and tomorrrow's match is the final between Madonna and Bob Dylan. This could go either way. It's time to decide which stand you'll be seated in!", 
-                                 'title': 'Pop World Cup: Madonna v Bob Dylan', 'nextEventId': 116109, 
-                                 'channelId': 8, 'stop': 1404498000, 'episodeId': 116200, 'start': 1404489700, 'method': 'eventAdd'}
-        g.add_a_programme(another_show_from_htsp)
+        g.add_a_programme(guide_model.Programme(1404489700,
+                        'Pop World Cup: Madonna v Bob Dylan',
+                        "It isn't the pop world cup and tomorrrow's match is the final between Madonna and Bob Dylan. This could go either way. It's time to decide which stand you'll be seated in!",
+                        8))
         # second one is on channel id 8
         self.assertEqual(g.listing(channel_name="More4")[0].title,'Pop World Cup: Madonna v Bob Dylan')
         
@@ -99,14 +92,13 @@ class GuideTests(unittest.TestCase):
         self.assertEqual(g.channel(7).name, "4Music")
         
         
-        g.add_a_programme({'eventId': 116107, 'serieslinkId': 76020, 'contentType': 96, 
-                              'description': "It's the pop world cup and today's match is the quarter final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!", 'title': 'Pop World Cup: Rihanna v Lady Gaga', 
-                              'nextEventId': 116109, 'channelId': 7, 'stop': 1404492000, 
-                              'episodeId': 116108, 'start': 1404489600, 'method': 'eventAdd'})
-        g.add_a_programme({'eventId': 116114, 'serieslinkId': 76020, 'contentType': 96, 
-                              'description': "It's the pop world cup and today's match is the semi final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!", 'title': 'Pop World Cup: Rihanna v Lady Gaga', 
-                              'nextEventId': 116115, 'channelId': 7, 'stop': 1404493200, 
-                              'episodeId': 116110, 'start': 1404492000, 'method': 'eventAdd'})
+        g.add_a_programme(guide_model.Programme(1404489600, 
+                'Pop World Cup: Rihanna v Lady Gaga',
+                "It's the pop world cup and today's match is the quarter final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!",
+                7))
+        g.add_a_programme(guide_model.Programme(1404492000, 'Pop World Cup: Rihanna v Lady Gaga',
+                                                "It's the pop world cup and today's match is the semi final between Rihanna and Lady Gaga. This could go either way. It's time to decide which stand you'll be seated in!", 
+                                                7))
 
         # first show is on channel id 7
         self.assertEqual(g.listing(channel_id=7)[0].title,'Pop World Cup: Rihanna v Lady Gaga')
@@ -114,14 +106,12 @@ class GuideTests(unittest.TestCase):
         g.add_a_channel(guide_model.Channel( 8, 'More4', 18))
         self.assertEqual(g.channel(8).name, "More4")
  
-        g.add_a_programme({'eventId': 116108, 'serieslinkId': 76001, 'contentType': 96,
-                                 'description': "It isn't the pop world cup and tomorrrow's match is the final between Madonna and Bob Dylan. This could go either way. It's time to decide which stand you'll be seated in!", 
-                                 'title': 'Pop World Cup: Madonna v Bob Dylan', 'nextEventId': 116109, 
-                                 'channelId': 8, 'stop': 1404498000, 'episodeId': 116200, 'start': 1404489700, 'method': 'eventAdd'})
-        g.add_a_programme({'eventId': 116116, 'serieslinkId': 76001, 'contentType': 96,
-                                 'description': "It isn't the pop world cup and tomorrrow's match is the final between Madonna and Bob Dylan. This could go either way. It's time to decide which stand you'll be seated in!", 
-                                 'title': 'Pop World Cup: Barry White v Rod Stewart', 'nextEventId': 116117, 
-                                 'channelId': 8, 'stop': 1404500000, 'episodeId': 116200, 'start': 1404499000, 'method': 'eventAdd'})
+        g.add_a_programme(guide_model.Programme(1404489700, 'Pop World Cup: Madonna v Bob Dylan',
+                    "It isn't the pop world cup and tomorrrow's match is the final between Madonna and Bob Dylan. This could go either way. It's time to decide which stand you'll be seated in!",
+                    8))
+        g.add_a_programme(guide_model.Programme(1404499000,'Pop World Cup: Barry White v Rod Stewart',
+                     "It isn't the pop world cup and tomorrrow's match is the final between Madonna and Bob Dylan. This could go either way. It's time to decide which stand you'll be seated in!", 
+                     8))
         # second one is on channel id 8
         self.assertEqual(g.listing(channel_name="More4")[0].title,'Pop World Cup: Madonna v Bob Dylan')
         self.assertEqual(g.listing(channel_name="More4")[1].title,'Pop World Cup: Barry White v Rod Stewart')

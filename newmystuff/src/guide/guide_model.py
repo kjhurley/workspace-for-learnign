@@ -16,7 +16,7 @@ Recorded broadcasts can be used to find related ones
 
 
 """
-import sys
+
 import logging
 
 class Recording:
