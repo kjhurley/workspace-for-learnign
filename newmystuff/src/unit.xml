@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite failures="0" tests="3" errors="0" name="Guide Tests" skip="0">
+<testcase classname="Guide Tests" name="Check now showing on channel 18" time="0">
+</testcase>
+<testcase classname="Guide Tests" name="Check now showing on More4" time="0">
+</testcase>
+<testcase classname="Guide Tests" name="Check not showing on More4" time="0">
+</testcase>
+</testsuite>
