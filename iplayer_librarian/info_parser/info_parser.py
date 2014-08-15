@@ -5,41 +5,6 @@ Created on 14 Aug 2014
 
 
 
-Web Sequence Diagram for scenario...
-title High Level Librarian
-
-Librarian->Librarian: Look for new files
-alt new iplayer file info
-Librarian->IPlayerFilingRules: get episode (iplayer info)
-IPlayerFilingRules->Episode: episode=create
-else new tvheadend file info
-Librarian->HTSPFilingRules: get episode(tvheadend info)
-HTSPFilingRules -> Episode: episode = create
-end
-alt is suitable for tvdb
-IPlayerFilingRules->StoreUsingTVDB: filer = create(episode)
-else
-IPlayerFilingRules->StoreUsingNfo: filer = create(episode)
-end
-Librarian->FilingAssistant: put new file in right location
-FilingAssistant->StoringRules: get rule for storing
-alt use links
-StoringRules->NewFileStoredAsALinkRule: rule = create
-else use move
-StoringRules->NewFileIsStoredUsingMove: rule = create
-else
-StoringRules->NewFileIsStoredUsingCopy: rule = create
-end
-alt using tvdb
-FilingAssistant->StoreUsingTVDB: store(rule)
-else
-FilingAssistant->StoreUsingNfo: store(rule)
-end
-
-
-
-
-
 '''
 import re
 import tvdb_api
