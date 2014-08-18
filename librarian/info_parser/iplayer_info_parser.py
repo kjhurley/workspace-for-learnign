@@ -161,7 +161,7 @@ def episode_factory(episode_info):
     return Episode(episode_info['name'],episode_info['title'],int(season_index),int(episode_index))
     
 
-class ParseInfo(object):
+class IPlayerInfoParser(object):
     '''
     Reads the long info output by get_iplayer and builds objects representing individual shows
     '''
@@ -173,7 +173,7 @@ class ParseInfo(object):
         '''
         self.shows=[]
         
-    def parse(self, info_stream):
+    def read_log(self, info_stream):
         """ read through the whole stream building the list of shows 
         
         Initially populate dictionaries built from the fields in the info stream
@@ -191,6 +191,7 @@ class ParseInfo(object):
         [fields_re.update({key: re.compile(optional_fields[key])}) for key in optional_fields]
         
         blank_re=re.compile("^\s+$")
+        show_info=[]
         current_show={}
         for line in info_stream:
             for key in fields_re:
@@ -202,13 +203,21 @@ class ParseInfo(object):
                     
             # end when all optional and mandatory fields are read *or* when all mandatory fields have been read and a blank line is found:
             if  ( len(current_show.keys())==(len(fields.keys())+len(optional_fields)))  or blank_re.match(line) and len(current_show.keys())== len(fields.keys()):
-                self.shows+=[episode_factory(current_show)]
+                show_info+=[current_show]
+                #self.shows+=[episode_factory(current_show)]
                 current_show={}
+        return show_info
+    
+    def parse(self, info_stream):
+        file_info_list=self.read_log(info_stream)
+        for file_info in file_info_list:    
+            self.shows+=[episode_factory(file_info)]
+        
         
 if __name__ == '__main__':
     import sys
-    p=ParseInfo()
-    p.parse(sys.stdin)
+    p=IPlayerInfoParser()
+    p.read_log(sys.stdin)
     for s in p.shows:
         s.cross_check_with_tvdb()
         print s

@@ -5,12 +5,12 @@ Created on 14 Aug 2014
 '''
 import unittest
 import mock
-import info_parser
+import info_parser.iplayer_info_parser
 import tvdb_api # needed to patch
 
 class Test(unittest.TestCase):
     def testBasicParser(self):
-        p=info_parser.ParseInfo()
+        p=info_parser.iplayer_info_parser.IPlayerInfoParser()
         stream="""INFO: File name prefix = Topsy_and_Tim_Series_2_-_13._Emergency_Rescue_b04bsgc6_default                 
 available:      Unknown
 categories:     Children's,Entertainment & Comedy,Drama
@@ -180,7 +180,7 @@ version:        default
 versions:       default
 web:            http://www.bbc.co.uk/programmes/b00y4yql.html
 """
-        p=info_parser.ParseInfo()
+        p=info_parser.iplayer_info_parser.IPlayerInfoParser()
         p.parse(info_stream.splitlines())
     
         self.assertEqual(str(p.shows[0]),"Horizon;Science Under Attack;s00.e10 [tvdb=None]")
@@ -248,7 +248,7 @@ version:        default
 versions:       default
 web:            http://www.bbc.co.uk/programmes/b03h79yk.html
         """ 
-        p=info_parser.ParseInfo()
+        p=info_parser.iplayer_info_parser.IPlayerInfoParser()
         p.parse(info_stream.splitlines())
     
         self.assertEqual(str(p.shows[0]),"Dragons;We Are Family (2);s01.e00 [tvdb=None]")
@@ -308,7 +308,7 @@ versions:       default
 web:            http://www.bbc.co.uk/programmes/b04dclt8.html
 
         """ 
-        p=info_parser.ParseInfo()
+        p=info_parser.iplayer_info_parser.IPlayerInfoParser()
         p.parse(info_stream.splitlines())
     
         self.assertEqual(str(p.shows[0]),"The Great British Bake Off: An Extra Slice;Episode 1;s00.e01 [tvdb=None]")
@@ -365,7 +365,7 @@ versions:       default
 web:            http://www.bbc.co.uk/programmes/b04dg5jq.html
 
         """ 
-        p=info_parser.ParseInfo()
+        p=info_parser.iplayer_info_parser.IPlayerInfoParser()
         p.parse(info_stream.splitlines())
     
         self.assertEqual(str(p.shows[0]),"The Sky at Night;How to Catch a Comet;s00.e00 [tvdb=None]")
