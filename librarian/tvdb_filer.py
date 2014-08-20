@@ -22,8 +22,7 @@ class TVDBFiler(object):
         the_episode=self.record.episode
         show_name,episode_title=the_episode.get_show_and_episode()
    
-        
-        return filename
+        return "newfilename"
     
     def original_file(self):
         return self.record.original_file_name
