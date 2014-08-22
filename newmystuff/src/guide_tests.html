@@ -320,31 +320,151 @@ ul.auto-toc {
 <p>The first set of tests is about building up the list of channels and
 programmes on those channels based on the updates coming from
 tvheadend.</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="43%" />
-<col width="40%" />
-<col width="17%" />
-</colgroup>
-<thead valign="bottom">
-<tr><th class="head">Test Case</th>
-<th class="head">Action</th>
-<th class="head">Arguments</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>List programmes on BBC One</td>
-<td>Populate guide</td>
-<td>&nbsp;</td>
-</tr>
-<tr><td><!--  -->
-</td>
-<td>Request listing by name</td>
-<td>BBC One</td>
-</tr>
-</tbody>
-</table>
-<table border="1" class="docutils">
+		<table border="1" class="docutils">
+			<colgroup>
+				<col width="43%" />
+				<col width="40%" />
+				<col width="17%" />
+			</colgroup>
+			<thead valign="bottom">
+				<tr>
+					<th class="head">Test Case</th>
+					<th class="head">Action</th>
+					<th class="head">Arguments</th>
+					<th>Arguments</th>
+				</tr>
+			</thead>
+			<tbody valign="top">
+				<tr>
+					<td>check now showing on channel 18</td>
+					<td>is_status</td>
+					<td>&nbsp;initialised</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>
+						<!--  -->
+					</td>
+					<td>is on now on channel number</td>
+					<td>18</td>
+					<td>Top 50 Collaborations of the 21stC</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>[Tags]</td>
+					<td>sunny day</td>
+					<td>listing</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<br /><table border="1" class="docutils">
+			<colgroup>
+				<col width="43%" />
+				<col width="40%" />
+				<col width="17%" />
+			</colgroup>
+			<thead valign="bottom">
+				<tr>
+					<th class="head">Test Case</th>
+					<th class="head">Action</th>
+					<th class="head">Arguments</th>
+					<th>Arguments</th>
+				</tr>
+			</thead>
+			<tbody valign="top">
+				<tr>
+					<td>check now showing on More 4</td>
+					<td>is_status</td>
+					<td>&nbsp;initialised</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>
+						
+					</td>
+					<td>is on now on channel named</td>
+					<td>More 4</td>
+					<td>Location, Location, Location</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>[Tags]</td>
+					<td>sunny day</td>
+					<td>listing</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table><br /><table border="1" class="docutils">
+			<colgroup>
+				<col width="43%" />
+				<col width="40%" />
+				<col width="17%" />
+			</colgroup>
+			<thead valign="bottom">
+				<tr>
+					<th class="head">Test Case</th>
+					<th class="head">Action</th>
+					<th class="head">Arguments</th>
+					<th>Arguments</th>
+				</tr>
+			</thead>
+			<tbody valign="top">
+				<tr>
+					<td>check not showing on channel 18</td>
+					<td>is_status</td>
+					<td>&nbsp;initialised</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>is not on now on channel number</td>
+					<td>18</td>
+					<td>New quiz</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>[Tags]</td>
+					<td>sunny day</td>
+					<td>listing</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>check not showing on channel 718</td>
+					<td>is_status</td>
+					<td>initialised</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>is not on now on channel number</td>
+					<td>718</td>
+					<td>Top 50 Collaborations of the 21stC</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>[Tags]</td>
+					<td>sunny day</td>
+					<td>listing</td>
+				</tr>
+			</tbody>
+		</table>
+		<br /><br /><table border="1" class="docutils">
 <colgroup>
 <col width="48%" />
 <col width="52%" />
@@ -356,10 +476,32 @@ tvheadend.</p>
 </thead>
 <tbody valign="top">
 <tr><td>Library</td>
-<td>guide_model.py</td>
+<td>robot_utils/bdd_tests.py</td>
 </tr>
 </tbody>
-</table>
-</div>
+</table><br /><br />The suite setup populates the guide by reading an epg dump captured in early Agust.<br /><table border="1" class="docutils"
+			style="height: 100px; width: 237px;">
+			<colgroup>
+				<col width="48%" />
+				<col width="52%" />
+			</colgroup>
+			<thead valign="bottom">
+				<tr>
+					<th class="head">Setting</th>
+					<th class="head">Value</th>
+				</tr>
+			</thead>
+			<tbody valign="top">
+				<tr>
+					<td>Suite setup</td>
+					<td>populate guide</td>
+				</tr>
+				<tr>
+					<td>Suite teardown</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>

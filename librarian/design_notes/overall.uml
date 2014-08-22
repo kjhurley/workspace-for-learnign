@@ -28,3 +28,30 @@ endwhile (none)
 :save current state including all known files;
 stop
 @enduml
+
+
+
+@startuml 
+title Abstract classes
+class Librarian{
+  look_for_new_files()
+}
+class LibraryRecord 
+class MonitorForNewRecording <<ABC>> {
+  read_log()
+  episode_factory()
+}
+class Programme <<ABC>>
+IPlayerMonitor <|- MonitorForNewRecording
+Librarian o-* "0..*" LibraryRecord : keeps
+Librarian *-- IPlayerMonitor: checks for updates
+IPlayerMonitor .. HorizonEpisode : creates >
+HorizonEpisode <|- IPlayerEpisode 
+IPlayerEpisode <|- Programme
+TVDBFiler .. FilingAssistant: generates filenames for >
+FilingAssistant .. Librarian : does filing for >
+class StoringRule <<ABC>>
+StoreAsALink .. StoringRule
+FilingAssistant -- StoringRule: provides storage rules <
+FilingAssistant .. StoreAsALink : knows how to >
+@enduml
