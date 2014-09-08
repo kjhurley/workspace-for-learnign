@@ -1,0 +1,43 @@
+<SingleChannelGuide>:
+    GridLayout:
+        id: details_outer_box
+        cols: 1
+        
+        # top details box:
+        GridLayout:
+            rows: 2
+            GridLayout:
+                rows: 1
+                StackLayout:
+                    orientation: 'lr-tb'
+                    Label:
+                        text: 'BBC One'
+                StackLayout:
+                    orientation: 'rl-tb'
+                    id: current_time_box
+                    Label:
+                        id: current_time_label
+                        text: '00:00'
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: "00:00  First show"
+                Label:
+                    text: "More details about the first show of the day. One for the owls."
+                    
+        # main listing
+        GridLayout:
+            cols: 1
+            Button:
+                text: "00:00  First show"
+            Button:
+                text: "01:00  Second show"
+                
+        # bottom row of buttons:
+
+        StackLayout:
+            Button:
+                text: "+1 day"
+            Button:
+                text: "-1 day"
+                

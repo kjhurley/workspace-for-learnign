@@ -1,0 +1,114 @@
+
+@startuml
+title high level view of librarian flow
+start
+:restore last states;
+note right: Use pickle?
+:search latest available file info;
+note right: look in iplayer log file and get data from htsp
+:compare against last know files;
+note right: last know files will be those listed in restored object
+while (new file info?) is (found one)
+  if (kind of info?) then (iplayer)
+    :process iplayer file;
+  else (htsp)
+    :process htsp file;
+  endif
+  :build episode;
+  :build new filename under xbmc;
+  if (store using copy?) then (yes)
+    :copy file to new filename;
+  elseif (store using move?) then (yes)
+    :move file to new filename;
+    else (store using link)
+     :link file to new filename;
+  endif
+  :record this file in list of know files;
+endwhile (none)
+:save current state including all known files;
+stop
+@enduml
+
+
+
+@startuml 
+title Abstract classes
+class Librarian{
+  look_for_new_files()
+  is_it_a_new_download()
+  records: list of LibraryRecord
+  assistant: FilingAssistant
+}
+class LibraryRecord {
+  create(file_info)
+  associate_episode(Episode)
+  get_episode()
+  original_filename()
+  stored_as(new_filename)
+}
+class IPlayerMonitor {
+  refresh()
+  episode_factory()
+}
+class TVDBFiler {
+  create(LibraryRecord)
+  build_new_filename()
+  original_file()
+}
+class HorizonEpisode {
+   create(parsed_info)
+   is_suitable_for_tvdb()
+   get_show_and_episode()
+   get_show_season_and_episode()
+}
+class FilingAssistant {
+  create(configuration)
+  put_new_file_in_right_location(Filer)
+}
+class StoringRule {
+  StoreRule get_rule_for_storing(LibraryRecord record)
+}
+class StoreAsALink {
+  create()
+  store(old_name, new_filename)
+}
+StoreAsALink <|- StoreRule
+
+Librarian o-* "0..*" LibraryRecord : records
+Librarian *-- IPlayerMonitor: checks for updates
+IPlayerMonitor .. HorizonEpisode : creates >
+TVDBFiler .. FilingAssistant: generates filenames for >
+FilingAssistant .. Librarian : assistant >
+class StoringRule <<ABC>>
+StoreAsALink .. StoringRule
+FilingAssistant -- StoringRule: provides storage rules <
+FilingAssistant .. StoreAsALink : stores using >
+@enduml
+
+
+
+@startuml
+
+class Programme {
+   create(parsed_info)
+}
+class Episode {
+   is_suitable_for_tvdb()
+   get_show_and_episode()
+   get_show_season_and_episode()
+}
+class Movie {
+   get_title_and_year()
+   get_title()
+}
+Episode <|- Programme
+Movie <|- Programme
+
+TVHeadendMovie <|- Movie
+ToppyMovie <|- Movie
+
+HorizonEpisode <|- IPlayerEpisode 
+IPlayerEpisode <|- Episode
+TVDBEpisode <|- Episode
+
+@enduml
