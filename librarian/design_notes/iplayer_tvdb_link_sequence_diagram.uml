@@ -62,6 +62,7 @@ note over StoringRules: check current configuration settings
 StoringRules->StoreAsALinkRule: rule = create
 FilingAssistant->StoreAsALinkRule: store(old_name, new_filename)
 note over StoreAsALinkRule: create link from old_name to new_filename
+<<<<<<< HEAD
 FilingAssistant->LibraryRecord: stored_as(new_filename)
 end # loop
 @enduml

@@ -10,8 +10,14 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.nitorcreations.robotframework.eclipseide.rfeBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.python.pydev.pythonNature</nature>
+		<nature>com.nitorcreations.robotframework.eclipseide.rfeNature</nature>
 	</natures>
 </projectDescription>
