@@ -19,6 +19,9 @@ Archive o-- "0..*" Recording
 Recording *-- Programme
 Recording o-- "0.." Search
 @enduml
+
+
+
 @startuml
 actor system
 system->Guide: create
@@ -31,6 +34,12 @@ system->Guide: listing (channel_id = 7)
 Guide->Channel: get_listing
 @enduml
 
-
+@startuml
+actor system
+system->Archive: create
+system->Programme: prog=create(channel, start time, title, description)
+system->Archive: add_recording(prog, recorded)
+system->Archive: is_recorded?
+@enduml
 
  """

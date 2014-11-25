@@ -92,11 +92,13 @@ class bdd_tests:
         
     def  is_recorded(self, start_time, title=None):
         """ check if recording at 'time' with given title was recorded """
-        for rec in self.archive:
-            if rec.info().start == start_time:
-                if title == rec.info().title: 
-                    return True
-        return False
+        entries =[rec for rec in self.archive if int(rec.info().start) == int(start_time) and title == rec.info().title and rec._recorded]
+        assert len(entries)>0, "no match for start_time=%s and title=%s"%(start_time, title)
+        
+    def  is_not_recorded(self, start_time, title=None):
+        """ check if recording at 'time' with given title was recorded """
+        entries =[rec for rec in self.archive if int(rec.info().start) == int(start_time) and title == rec.info().title and not rec._recorded]
+        assert len(entries)>0, "no match for unrecorded show start_time=%s and title=%s"%(start_time, title)
 
 if __name__ == '__main__':
     bdd_tests.populate_guide()

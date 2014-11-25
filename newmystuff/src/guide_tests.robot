@@ -34,6 +34,10 @@ Check next plus 1 showing on More 4     Is_status                     initialise
 Check show recorded using time and title     Is_status                     initialised 
     Is recorded   1388359500   The Big Bang Theory
     [Tags]             Sunny Day    Recordings
+    
+Check show not recorded using time and title     Is_status                     initialised 
+    Is not recorded   1390428000   Treasures of Ancient Egypt
+    [Tags]             Sunny Day    Recordings
 
 
 

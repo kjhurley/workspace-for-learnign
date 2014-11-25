@@ -45,7 +45,7 @@ class HtspInterface(object):
         "def __init__(self, programme, recorded=True, watched=False, file_path=None):"
         event_msg['channelId']=event_msg['channel']
         new_prog=cls.programme(event_msg)
-        logging.warn(event_msg)
+        logging.debug(event_msg)
         if event_msg['state'] == 'completed':
             return guide.guide_model.Recording(new_prog, recorded=True,watched=False,file_path=event_msg['path'])
         else:

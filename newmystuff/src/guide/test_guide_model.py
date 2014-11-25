@@ -147,3 +147,13 @@ class ProgrammeTests(unittest.TestCase):
     def test(self):
         pass
     
+    
+class RecordingTests(unittest.TestCase):
+    def test_create_a_pending_recording(self):
+        p0=guide_model.Programme(0,"first show","nonsense",8)
+        r=guide_model.Recording(p0,recorded=False)
+        self.assertEqual(r.info().start,p0.start)
+        self.assertEqual(r.info().title,p0.title)
+        
+if __name__ == '__main__':
+    unittest.main()

@@ -20,7 +20,8 @@ Recorded broadcasts can be used to find related ones
 import logging
 
 class Recording:
-    """ a recorded programme """
+    """ a programme scheduled to be recorded 
+    possibly already recorded or missed or not yet recorded """
     def __init__(self, programme, recorded=True, watched=False, file_path=None):
         self._prog=programme
         self._recorded=recorded
