@@ -15,6 +15,7 @@ Users specify one off timers to record or smart-timers to record multiple connec
 Recorded broadcasts can be used to find related ones
 
 
+
 """
 
 import logging
@@ -54,15 +55,6 @@ class Programme:
         """ used to find other programmes like this one """
         pass
 
-    @classmethod
-    def from_htsp(cls,event_msg):
-        if 'description' in event_msg:
-            return cls(start_time=event_msg["start"],   
-                   title=event_msg["title"], 
-                   details=event_msg["description"])
-        else:
-            logging.debug( "no description in "+str(event_msg))
-            raise RuntimeError("cannot create programme from input - no description present")
 
 
 class Channel:
@@ -82,14 +74,6 @@ class Channel:
 
     def __repr__(self):
         return "(%d) %s - %d"%(self.cid, self.name, self.number)
-    
-    def htsp_add_programme_event(self, event_msg):
-        try:
-            self.listing+=[Programme.from_htsp(event_msg)]
-        except RuntimeError:
-            #logging.debug("couldn't add a programme")
-            pass
-    
     
     def add_programme(self, programme):
         """ insert programme into the listing in chronological order """
@@ -118,13 +102,8 @@ class Guide:
     def add_a_programme(self, new_programme):
         """ add a single show (on a given channel) """
         channel_id=new_programme.cid
-        try:
-            self._channel_info[channel_id].add_programme(new_programme)
-            self._channels[channel_id]+=[]
-        except RuntimeError:
-            #logging.info("missing stuff!")
-            pass    
-        
+        self._channel_info[channel_id].add_programme(new_programme)
+        self._channels[channel_id]+=[]
         
     def now(self, **kwargs):
         """ what's on now on specified channel 

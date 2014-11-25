@@ -39,3 +39,26 @@ class HtspInterface(object):
         else:
             logging.debug( "no description in "+str(event_msg))
             raise ConversionError("cannot create programme from input - no description present")
+        
+        
+        
+        
+"""
+class Programme:
+    @classmethod
+    def from_htsp(cls,event_msg):
+        if 'description' in event_msg:
+            return cls(start_time=event_msg["start"],   
+                   title=event_msg["title"], 
+                   details=event_msg["description"])
+        else:
+            logging.debug( "no description in "+str(event_msg))
+            raise RuntimeError("cannot create programme from input - no description present")
+class Channel:
+    def htsp_add_programme_event(self, event_msg):
+        try:
+            self.listing+=[Programme.from_htsp(event_msg)]
+        except RuntimeError:
+            #logging.debug("couldn't add a programme")
+            pass
+"""

@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite failures="0" tests="3" errors="0" name="Guide Tests" skip="0">
+<testsuite failures="6" tests="6" errors="0" name="Guide Tests" skip="0">
 <testcase classname="Guide Tests" name="Check now showing on channel 18" time="0">
+<failure message="Parent suite setup failed:&#10;IOError: [Errno 2] No such file or directory: '/home/khurley/workspace/newmystuff/src/robot_utils/epg.dump'" type="AssertionError"></failure>
 </testcase>
-<testcase classname="Guide Tests" name="Check now showing on More4" time="0">
+<testcase classname="Guide Tests" name="Check now showing on More 4" time="0">
+<failure message="Parent suite setup failed:&#10;IOError: [Errno 2] No such file or directory: '/home/khurley/workspace/newmystuff/src/robot_utils/epg.dump'" type="AssertionError"></failure>
 </testcase>
-<testcase classname="Guide Tests" name="Check not showing on More4" time="0">
+<testcase classname="Guide Tests" name="Check not showing on channel 18" time="0">
+<failure message="Parent suite setup failed:&#10;IOError: [Errno 2] No such file or directory: '/home/khurley/workspace/newmystuff/src/robot_utils/epg.dump'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="Guide Tests" name="Check not showing on channel id 48" time="0">
+<failure message="Parent suite setup failed:&#10;IOError: [Errno 2] No such file or directory: '/home/khurley/workspace/newmystuff/src/robot_utils/epg.dump'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="Guide Tests" name="Check next showing on More 4" time="0">
+<failure message="Parent suite setup failed:&#10;IOError: [Errno 2] No such file or directory: '/home/khurley/workspace/newmystuff/src/robot_utils/epg.dump'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="Guide Tests" name="Check next plus 1 showing on More 4" time="0">
+<failure message="Parent suite setup failed:&#10;IOError: [Errno 2] No such file or directory: '/home/khurley/workspace/newmystuff/src/robot_utils/epg.dump'" type="AssertionError"></failure>
 </testcase>
 </testsuite>
