@@ -4,7 +4,7 @@ Created on 10 Jul 2014
 @author: khurley
 '''
 
-import guide_model
+import guide.guide_model
 import exceptions
 import logging
 
@@ -25,14 +25,14 @@ class HtspInterface(object):
     
     @classmethod
     def channel(cls, event_msg):
-        return guide_model.Channel(channel_id=event_msg['channelId'], 
+        return guide.guide_model.Channel(channel_id=event_msg['channelId'], 
                      name=event_msg['channelName'], 
                      number=event_msg['channelNumber'])
     
     @classmethod
     def programme(cls,event_msg):
         if 'description' in event_msg:
-            return guide_model.Programme(start_time=event_msg["start"],   
+            return guide.guide_model.Programme(start_time=event_msg["start"],   
                    title=event_msg["title"], 
                    details=event_msg["description"],
                    channel_id=event_msg["channelId"])

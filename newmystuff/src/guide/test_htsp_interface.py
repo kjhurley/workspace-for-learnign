@@ -10,12 +10,11 @@ import mock
 
 class TestConversionFromHTSP(unittest.TestCase):
     def test_create_a_programme(self):
-        with mock.patch('guide_model.Programme') as mocked:
-            mocked.side_effect = Exception("boom")
+        with mock.patch('guide.guide_model.Programme') as mocked:
             event_msg={'title':'Title','description':'Details', 'start':100, "channelId":8}
             prog=htsp_interface.HtspInterface.programme(event_msg)
-            self.assertEqual(prog.start, 100)
             mocked.assert_called_once()
+            
             
     def test_create_a_channel(self):
         event_msg={'channelName':'BBC One', "channelId":99, "channelNumber":1}
