@@ -2,7 +2,7 @@ import guide.guide_model
 import guide.htsp_interface
 import logging
 
-EPG_DUMP="/home/khurley/workspace/newmystuff/src/robot_utils/epg.dump"
+EPG_DUMP="robot_utils/epg.dump"
 
 def read_from_epg_dump(filename):
     msg_list=[]
