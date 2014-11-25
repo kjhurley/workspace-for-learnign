@@ -30,6 +30,13 @@ Check next plus 1 showing on More 4     Is_status                     initialise
                                                                                             
  
 
+*** Test Cases ***
+Check show recorded using time and title     Is_status                     initialised 
+    Is recorded   1388359500   The Big Bang Theory
+    [Tags]             Sunny Day    Recordings
+
+
+
 *** Setting ***
 Library     robot_utils/bdd_tests.py         
                                    

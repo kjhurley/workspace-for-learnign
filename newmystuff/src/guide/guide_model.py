@@ -21,8 +21,14 @@ import logging
 
 class Recording:
     """ a recorded programme """
+    def __init__(self, programme, recorded=True, watched=False, file_path=None):
+        self._prog=programme
+        self._recorded=recorded
+        self._watched=watched
+        self._file_path=file_path
+        
     def is_watched(self):
-        pass
+        return self._watched
     
     def recorded_by(self):
         """ returns the search object that triggered the recording """
@@ -30,7 +36,7 @@ class Recording:
     
     def info(self):
         """ programme info of the original broadcast """
-        pass
+        return self._prog.info()
 
 class Programme:
     """ holds information on a single broadcast entity
@@ -53,6 +59,9 @@ class Programme:
     def like_this(self):
         """ used to find other programmes like this one """
         pass
+    
+    def info(self):
+        return self
 
     @classmethod
     def from_htsp(cls,event_msg):
