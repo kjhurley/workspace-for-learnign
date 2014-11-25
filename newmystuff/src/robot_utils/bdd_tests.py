@@ -18,10 +18,12 @@ class bdd_tests:
     These methods are used by the robot tests
     """
     GUIDE=None
+    ARCHIVE=None
     def __init__(self):
         logging.debug("bdd_tests.__init__")
         self._status = 'uninitialised'
         self.guide = self.__class__.GUIDE
+        self.archive=self.__class__.ARCHIVE
         if self.guide is not None:
             self._status = 'initialised'
  
@@ -29,8 +31,9 @@ class bdd_tests:
     def populate_guide(cls, epg_dump_file=EPG_DUMP):
         """ use an epg dump to fill the guide """
         logging.debug("bdd_tests.populate_guide()")
-        if cls.GUIDE is None:
+        if cls.GUIDE is None and cls.ARCHIVE is None:
             cls.GUIDE=guide.guide_model.Guide()
+            cls.ARCHIVE=[]
             htsp_msgs=read_from_epg_dump(epg_dump_file)
             for msg in htsp_msgs:
                 if 'method' in msg:
@@ -45,6 +48,10 @@ class bdd_tests:
                             logging.debug("adding "+str(msg))
                         except guide.htsp_interface.ConversionError:
                             logging.info("no description in %s"%str(msg))
+                    elif 'dvrEntryAdd' == msg['method']:
+                        cls.ARCHIVE+=[guide.htsp_interface.HtspInterface.recording(msg)]
+                        logging.debug("adding dvr entry %s"%msg)
+                            
         assert len(cls.GUIDE._channel_info)>0
 
     def is_on_now_on_channel_number(self, number, title):
@@ -82,6 +89,14 @@ class bdd_tests:
         
     def is_status(self, expected_status):
         assert self._status == expected_status, "%s != %s"%(self._status, expected_status)
+        
+    def  is_recorded(self, start_time, title=None):
+        """ check if recording at 'time' with given title was recorded """
+        for rec in self.archive:
+            if rec.info().start == start_time:
+                if title == rec.info().title: 
+                    return True
+        return False
 
 if __name__ == '__main__':
     bdd_tests.populate_guide()

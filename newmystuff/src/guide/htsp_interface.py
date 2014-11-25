@@ -39,3 +39,15 @@ class HtspInterface(object):
         else:
             logging.debug( "no description in "+str(event_msg))
             raise ConversionError("cannot create programme from input - no description present")
+        
+    @classmethod
+    def recording(cls, event_msg):
+        "def __init__(self, programme, recorded=True, watched=False, file_path=None):"
+        event_msg['channelId']=event_msg['channel']
+        new_prog=cls.programme(event_msg)
+        logging.warn(event_msg)
+        if event_msg['state'] == 'completed':
+            return guide.guide_model.Recording(new_prog, recorded=True,watched=False,file_path=event_msg['path'])
+        else:
+            return guide.guide_model.Recording(new_prog,recorded=False)
+        
